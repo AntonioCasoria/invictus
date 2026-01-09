@@ -17,8 +17,7 @@ public class Performance {
     public Performance() {
     }
 
-    public Performance(int idPerformance, int idUtente, String data, String feedback, float carico, int RPE, int serieEffettive, int ripetizioniEffettive, int tempoRecuperoEffettivo, int RPEeffettivo) {
-        this.idPerformance = idPerformance;
+    public Performance(int idUtente, String data, String feedback, float carico, int RPE, int serieEffettive, int ripetizioniEffettive, int tempoRecuperoEffettivo, int RPEeffettivo) {
         this.idUtente = idUtente;
         this.data = data;
         this.feedback = feedback;

@@ -13,8 +13,7 @@ public class SchedaAllenamento {
     public SchedaAllenamento() {
     }
 
-    public SchedaAllenamento(int idScheda, int idUtente, int idPT, String dataCreazione, String durata, String obiettivo) {
-        this.idScheda = idScheda;
+    public SchedaAllenamento(int idUtente, int idPT, String dataCreazione, String durata, String obiettivo) {
         this.idUtente = idUtente;
         this.idPT = idPT;
         this.dataCreazione = dataCreazione;

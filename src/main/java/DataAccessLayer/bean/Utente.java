@@ -12,9 +12,9 @@ public class Utente {
     private String indirizzo;
     private String ruolo;
     private int eta;
-    private char sesso;
+    private String sesso;
     private int altezza;
-    private int peso;
+    private float peso;
     private String fitnessLevel;
     private String anniEsperienzaDichiarati;
     private int frequenzaSettimanale;
@@ -23,8 +23,7 @@ public class Utente {
 
     public Utente(){}
 
-    public Utente(int idUtente, String nome, String cognome, String email, String password, String dataNascita, String indirizzo, String ruolo, int eta, char sesso, int altezza, int peso, String fitnessLevel, String anniEsperienzaDichiarati, int frequenzaSettimanale, String dataIscrizione, String obiettivo) {
-        this.idUtente = idUtente;
+    public Utente(String nome, String cognome, String email, String password, String dataNascita, String indirizzo, String ruolo, int eta, String sesso, int altezza, float peso, String fitnessLevel, String anniEsperienzaDichiarati, int frequenzaSettimanale, String dataIscrizione, String obiettivo) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -115,11 +114,11 @@ public class Utente {
         this.eta = eta;
     }
 
-    public char getSesso() {
+    public String getSesso() {
         return sesso;
     }
 
-    public void setSesso(char sesso) {
+    public void setSesso(String sesso) {
         this.sesso = sesso;
     }
 
@@ -131,11 +130,11 @@ public class Utente {
         this.altezza = altezza;
     }
 
-    public int getPeso() {
+    public float getPeso() {
         return peso;
     }
 
-    public void setPeso(int peso) {
+    public void setPeso(float peso) {
         this.peso = peso;
     }
 

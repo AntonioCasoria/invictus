@@ -13,8 +13,7 @@ public class PersonalTrainer {
     public PersonalTrainer() {
     }
 
-    public PersonalTrainer(int idPT, String nome, String cognome, String email, String password, String dataNascita) {
-        this.idPT = idPT;
+    public PersonalTrainer(String nome, String cognome, String email, String password, String dataNascita) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;

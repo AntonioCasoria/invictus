@@ -11,8 +11,7 @@ public class Progressi {
     public Progressi() {
     }
 
-    public Progressi(int idProgressi, int idPerfomance, int idUtente, int idEsercizio) {
-        this.idProgressi = idProgressi;
+    public Progressi(int idPerfomance, int idUtente, int idEsercizio) {
         this.idPerfomance = idPerfomance;
         this.idUtente = idUtente;
         this.idEsercizio = idEsercizio;

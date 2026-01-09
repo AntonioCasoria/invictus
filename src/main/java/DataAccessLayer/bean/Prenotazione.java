@@ -12,8 +12,7 @@ public class Prenotazione {
     public Prenotazione() {
     }
 
-    public Prenotazione(int idPrenotazione, int idUtente, String dataPrenotazione, String fasciaOraria, String stato) {
-        this.idPrenotazione = idPrenotazione;
+    public Prenotazione(int idUtente, String dataPrenotazione, String fasciaOraria, String stato) {
         this.idUtente = idUtente;
         this.dataPrenotazione = dataPrenotazione;
         this.fasciaOraria = fasciaOraria;

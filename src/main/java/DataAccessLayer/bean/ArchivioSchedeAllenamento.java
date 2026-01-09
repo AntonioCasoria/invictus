@@ -11,8 +11,7 @@ public class ArchivioSchedeAllenamento {
     public ArchivioSchedeAllenamento() {
     }
 
-    public ArchivioSchedeAllenamento(int idArchivioSchedaAllenamento, int idUtente, int idScheda, int idPT) {
-        this.idArchivioSchedaAllenamento = idArchivioSchedaAllenamento;
+    public ArchivioSchedeAllenamento(int idUtente, int idScheda, int idPT) {
         this.idUtente = idUtente;
         this.idScheda = idScheda;
         this.idPT = idPT;

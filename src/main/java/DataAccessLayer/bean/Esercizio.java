@@ -16,8 +16,7 @@ public class Esercizio {
     public Esercizio() {
     }
 
-    public Esercizio(int idEsercizio, String nome, String descrizione, String gruppoMuscolare, int serie, int ripetizione, int tempoRecupero, String contenutoMultimediale, String contenutoMultimediale2) {
-        this.idEsercizio = idEsercizio;
+    public Esercizio(String nome, String descrizione, String gruppoMuscolare, int serie, int ripetizione, int tempoRecupero, String contenutoMultimediale, String contenutoMultimediale2) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.gruppoMuscolare = gruppoMuscolare;
