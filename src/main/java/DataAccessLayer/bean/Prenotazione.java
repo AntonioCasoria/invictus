@@ -1,18 +1,19 @@
 package DataAccessLayer.bean;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Prenotazione {
    private int idPrenotazione;
    private int idUtente;
-   private String dataPrenotazione;
+   private LocalDate dataPrenotazione;
    private String fasciaOraria;
    private String stato;
 
     public Prenotazione() {
     }
 
-    public Prenotazione(int idUtente, String dataPrenotazione, String fasciaOraria, String stato) {
+    public Prenotazione(int idUtente, LocalDate dataPrenotazione, String fasciaOraria, String stato) {
         this.idUtente = idUtente;
         this.dataPrenotazione = dataPrenotazione;
         this.fasciaOraria = fasciaOraria;
@@ -35,11 +36,11 @@ public class Prenotazione {
         this.idUtente = idUtente;
     }
 
-    public String getDataPrenotazione() {
+    public LocalDate getDataPrenotazione() {
         return dataPrenotazione;
     }
 
-    public void setDataPrenotazione(String dataPrenotazione) {
+    public void setDataPrenotazione(LocalDate dataPrenotazione) {
         this.dataPrenotazione = dataPrenotazione;
     }
 

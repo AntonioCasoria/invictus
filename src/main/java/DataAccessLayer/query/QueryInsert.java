@@ -65,6 +65,7 @@ public class QueryInsert {
         InsertMYSQL insert = new InsertMYSQL(conn);
         String query = "insert into Prenotazione(IdUtente,DataPrenotazione,FasciaOraria,Stato) values" +
                 "(" + p.getIdUtente() + ", '" + p.getDataPrenotazione() + "', '" + p.getFasciaOraria() + "', '" + p.getStato() + "')";
+        insert.insert(query);
     }
 
     public void insertProgressi(Progressi p){
@@ -83,7 +84,9 @@ public class QueryInsert {
 
     public void insertUtente(Utente u){
         InsertMYSQL insert = new InsertMYSQL(conn);
-        String query = "insert into Utente(Nome,Cognome,Email,Password,DataNascita,Indirizzo,Ruolo,Eta,Sesso,Altezza,Peso,FitnessLevel,AnniEsperienzaDichiarati,DataIscrizione,Obiettivo) values" +
-                "('" + u.getNome() + "','" + u.getCognome() + "','" + u.getEmail() + "','" + u.getPassword() + "', '" + u.getDataNascita() + "', '" + u.getIndirizzo() + "', '" + u.getRuolo() + "', " + u.getEta() + ", '" + u.getSesso() + "', " + u.getAltezza() + ", " + u.getPeso() + ", " + u.getFitnessLevel() + ", " + u.getAnniEsperienzaDichiarati() + ", '" + u.getDataIscrizione() + "', '" + u.getObiettivo() + "')";
+        String query = "insert into Utente(Nome,Cognome,Email,Password,DataNascita,Indirizzo,Ruolo,Eta,Sesso,Altezza,Peso,FitnessLevel,AnniEsperienzaDichiarati,FrequenzaSettimanale,DataIscrizione,Obiettivo) values" +
+                "('" + u.getNome() + "','" + u.getCognome() + "','" + u.getEmail() + "','" + u.getPassword() + "', '" + u.getDataNascita() + "', '" + u.getIndirizzo() + "', '" + u.getRuolo() + "', " + u.getEta() + ", '" + u.getSesso() + "', " + u.getAltezza() + ", " + u.getPeso() + ", '" + u.getFitnessLevel() + "', " + u.getAnniEsperienzaDichiarati() + ", " + u.getFrequenzaSettimanale() + ", '" + u.getDataIscrizione() + "', '" + u.getObiettivo() + "')";
+        insert.insert(query);
     }
+
 }

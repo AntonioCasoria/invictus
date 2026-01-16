@@ -6,7 +6,9 @@ import DataAccessLayer.sql.SelectMYSQL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class QuerySelect {
     private Connection conn;
@@ -137,7 +139,23 @@ public class QuerySelect {
         if(rs.next()){
             p.setIdPrenotazione(rs.getInt(1));
             p.setIdUtente(rs.getInt(2));
-            p.setDataPrenotazione(rs.getString(3));
+            p.setDataPrenotazione(rs.getDate(3).toLocalDate());
+            p.setFasciaOraria(rs.getString(4));
+            p.setStato(rs.getString(5));
+        }
+
+        return p;
+    }
+
+    public Prenotazione selectPrenotazioneByIdUtenteGiornoOra(int id, LocalDate data, String ora) throws SQLException {
+        String query = "SELECT * FROM Prenotazione WHERE IdUtente = "  + id + " AND DataPrenotazione = '" + data + "' AND FasciaOraria = '" + ora + "'";
+        ResultSet rs = select.select(query);
+        Prenotazione p = new Prenotazione();
+
+        if(rs.next()){
+            p.setIdPrenotazione(rs.getInt(1));
+            p.setIdUtente(rs.getInt(2));
+            p.setDataPrenotazione(rs.getDate(3).toLocalDate());
             p.setFasciaOraria(rs.getString(4));
             p.setStato(rs.getString(5));
         }
@@ -189,7 +207,7 @@ public class QuerySelect {
             u.setCognome(rs.getString(3));
             u.setEmail(rs.getString(4));
             u.setPassword(rs.getString(5));
-            u.setDataNascita(rs.getString(6));
+            u.setDataNascita(rs.getDate(6).toLocalDate());
             u.setIndirizzo(rs.getString(7));
             u.setRuolo(rs.getString(8));
             u.setEta(rs.getInt(9));
@@ -199,10 +217,62 @@ public class QuerySelect {
             u.setFitnessLevel(rs.getString(13));
             u.setAnniEsperienzaDichiarati(rs.getString(14));
             u.setAnniEsperienzaDichiarati(rs.getString(15));
-            u.setDataIscrizione(rs.getString(16));
+            u.setDataIscrizione(rs.getDate(16).toLocalDate());
             u.setObiettivo(rs.getString(17));
         }
 
         return u;
+    }
+
+    public ArrayList<Utente> selectUtentiAll() throws SQLException {
+        String query = "SELECT * FROM Utente";
+        ResultSet rs = select.select(query);
+        ArrayList<Utente> utenti = new ArrayList<>();
+
+        while(rs.next()){
+            Utente u = new Utente();
+            u.setIdUtente(rs.getInt(1));
+            u.setNome(rs.getString(2));
+            u.setCognome(rs.getString(3));
+            u.setEmail(rs.getString(4));
+            u.setPassword(rs.getString(5));
+            u.setDataNascita(rs.getDate(6).toLocalDate());
+            u.setIndirizzo(rs.getString(7));
+            u.setRuolo(rs.getString(8));
+            u.setEta(rs.getInt(9));
+            u.setSesso(rs.getString(10));
+            u.setAltezza(rs.getInt(11));
+            u.setPeso(rs.getInt(12));
+            u.setFitnessLevel(rs.getString(13));
+            u.setAnniEsperienzaDichiarati(rs.getString(14));
+            u.setAnniEsperienzaDichiarati(rs.getString(15));
+            u.setDataIscrizione(rs.getDate(16).toLocalDate());
+            u.setObiettivo(rs.getString(17));
+
+            utenti.add(u);
+        }
+        return utenti;
+    }
+
+    public List<String> getOrariByUtenteEData(int id, LocalDate data) throws SQLException {
+        String query = "SELECT DISTINCT FasciaOraria FROM Prenotazione WHERE IdUtente = " + id + " AND DataPrenotazione = '" + data + "'";
+        ResultSet rs = select.select(query);
+        List<String> orari = new ArrayList<>();
+
+        while (rs.next()){
+            orari.add(rs.getString(1));
+        }
+        return orari;
+    }
+
+    public List<String> getOrariEsauritiByData(LocalDate data, int capienza) throws SQLException {
+        String query = "SELECT FasciaOraria from Prenotazione where DataPrenotazione = '"+ data +"' group by FasciaOraria having count(IdUtente)>="+capienza;
+        ResultSet rs = select.select(query);
+        List<String> orari = new ArrayList<>();
+
+        while (rs.next()){
+            orari.add(rs.getString(1));
+        }
+        return orari;
     }
 }

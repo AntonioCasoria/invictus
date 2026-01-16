@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>Register</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -45,7 +45,9 @@
             <!-- Nested Row within Card Body -->
             <div class="row">
                 <div class="col-lg-5 d-none d-lg-block bg-register-image">
+                    <a href="index.jsp">
                     <img src="img/logoInvictus.png" style="height: auto; width: 270px; float: unset; margin-left: 90px; margin-top: 340px;}">
+                    </a>
                 </div>
                 <div class="col-lg-7">
                     <div class="p-5">
@@ -111,12 +113,12 @@
 
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="number" class="form-control form-control-user" id="AnniExp" name="AnniExp"
+                                    <input type="number" class="form-control form-control-user" id="AnniExp" name="AnniExp" MIN="0"
                                            placeholder="Inserire anni esperienza" required>
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <input type="number" class="form-control form-control-user" id="FreqSett" name="FreqSett"
+                                    <input type="number" class="form-control form-control-user" id="FreqSett" name="FreqSett" MIN="0" MAX="5"
                                            placeholder="Frequenza Settimanale"  max="7" required>
                                 </div>
                             </div>
@@ -126,7 +128,7 @@
                                        placeholder="Email" required>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control form-control-user" id="password" name="password"
+                                <input type="password" class="form-control form-control-user" id="Password" name="Password"
                                        placeholder="Password"
                                        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\-_])[A-Za-z\d@$!%*?&\-_]{8,}$"
                                        title="La password deve essere di almeno 8 caratteri e deve contenere almeno un carattere maiuscolo, un numero e un carattere speciale"

@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>HomePage</title>
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -27,7 +27,7 @@
     <ul class="navbar-nav bg-sidebar sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
             <div class="sidebar-brand-icon">
                 <img src="img/logoInvictus.png" alt="logo" style="width: auto; height: 50px;">
             </div>
@@ -38,7 +38,7 @@
 
         <!-- Nav Item - Prenotazione -->
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="login.jsp">
                 <i class="fa-solid fa-calendar" style="color: #1e73be;"></i>
                 <span style="color: #1e73be;">Prenotazione</span></a>
         </li>
@@ -55,8 +55,8 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-gray-200 py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="">Scheda di Allenamento</a>
-                    <a class="collapse-item" href="">Visualizza Performance</a>
+                    <a class="collapse-item" href="login.jsp">Scheda di Allenamento</a>
+                    <a class="collapse-item" href="login.jsp">Visualizza Performance</a>
                 </div>
             </div>
         </li>
@@ -66,7 +66,7 @@
 
         <!-- Nav Item - Performance -->
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="login.jsp">
                 <i class="fas fa-fw fa-chart-area" style="color: #1e73be;"></i>
                 <span style="color: #1e73be;">Performance</span></a>
         </li>

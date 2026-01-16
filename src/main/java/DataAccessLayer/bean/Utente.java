@@ -1,5 +1,6 @@
 package DataAccessLayer.bean;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Utente {
@@ -8,7 +9,7 @@ public class Utente {
     private String cognome;
     private String email;
     private String password;
-    private String dataNascita;
+    private LocalDate dataNascita;
     private String indirizzo;
     private String ruolo;
     private int eta;
@@ -18,12 +19,12 @@ public class Utente {
     private String fitnessLevel;
     private String anniEsperienzaDichiarati;
     private int frequenzaSettimanale;
-    private String dataIscrizione;
+    private LocalDate dataIscrizione;
     private String obiettivo;
 
     public Utente(){}
 
-    public Utente(String nome, String cognome, String email, String password, String dataNascita, String indirizzo, String ruolo, int eta, String sesso, int altezza, float peso, String fitnessLevel, String anniEsperienzaDichiarati, int frequenzaSettimanale, String dataIscrizione, String obiettivo) {
+    public Utente(String nome, String cognome, String email, String password, LocalDate dataNascita, String indirizzo, String ruolo, int eta, String sesso, int altezza, float peso, String fitnessLevel, String anniEsperienzaDichiarati, int frequenzaSettimanale, LocalDate dataIscrizione, String obiettivo) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -82,11 +83,11 @@ public class Utente {
         this.password = password;
     }
 
-    public String getDataNascita() {
+    public LocalDate getDataNascita() {
         return dataNascita;
     }
 
-    public void setDataNascita(String dataNascita) {
+    public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
     }
 
@@ -162,11 +163,11 @@ public class Utente {
         this.frequenzaSettimanale = frequenzaSettimanale;
     }
 
-    public String getDataIscrizione() {
+    public LocalDate getDataIscrizione() {
         return dataIscrizione;
     }
 
-    public void setDataIscrizione(String dataIscrizione) {
+    public void setDataIscrizione(LocalDate dataIscrizione) {
         this.dataIscrizione = dataIscrizione;
     }
 
@@ -181,7 +182,7 @@ public class Utente {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Utente utente)) return false;
-        return idUtente == utente.idUtente && eta == utente.eta && sesso == utente.sesso && altezza == utente.altezza && peso == utente.peso && frequenzaSettimanale == utente.frequenzaSettimanale && Objects.equals(nome, utente.nome) && Objects.equals(cognome, utente.cognome) && Objects.equals(email, utente.email) && Objects.equals(password, utente.password) && Objects.equals(dataNascita, utente.dataNascita) && Objects.equals(indirizzo, utente.indirizzo) && Objects.equals(ruolo, utente.ruolo) && Objects.equals(fitnessLevel, utente.fitnessLevel) && Objects.equals(anniEsperienzaDichiarati, utente.anniEsperienzaDichiarati) && Objects.equals(dataIscrizione, utente.dataIscrizione) && Objects.equals(obiettivo, utente.obiettivo);
+        return idUtente == utente.idUtente && eta == utente.eta && altezza == utente.altezza && Float.compare(peso, utente.peso) == 0 && frequenzaSettimanale == utente.frequenzaSettimanale && Objects.equals(nome, utente.nome) && Objects.equals(cognome, utente.cognome) && Objects.equals(email, utente.email) && Objects.equals(password, utente.password) && Objects.equals(dataNascita, utente.dataNascita) && Objects.equals(indirizzo, utente.indirizzo) && Objects.equals(ruolo, utente.ruolo) && Objects.equals(sesso, utente.sesso) && Objects.equals(fitnessLevel, utente.fitnessLevel) && Objects.equals(anniEsperienzaDichiarati, utente.anniEsperienzaDichiarati) && Objects.equals(dataIscrizione, utente.dataIscrizione) && Objects.equals(obiettivo, utente.obiettivo);
     }
 
     @Override
@@ -192,19 +193,18 @@ public class Utente {
                 ", cognome='" + cognome + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", dataNascita='" + dataNascita + '\'' +
+                ", dataNascita=" + dataNascita +
                 ", indirizzo='" + indirizzo + '\'' +
                 ", ruolo='" + ruolo + '\'' +
                 ", eta=" + eta +
-                ", sesso=" + sesso +
+                ", sesso='" + sesso + '\'' +
                 ", altezza=" + altezza +
                 ", peso=" + peso +
                 ", fitnessLevel='" + fitnessLevel + '\'' +
                 ", anniEsperienzaDichiarati='" + anniEsperienzaDichiarati + '\'' +
                 ", frequenzaSettimanale=" + frequenzaSettimanale +
-                ", dataIscrizione='" + dataIscrizione + '\'' +
+                ", dataIscrizione=" + dataIscrizione +
                 ", obiettivo='" + obiettivo + '\'' +
                 '}';
     }
-
 }

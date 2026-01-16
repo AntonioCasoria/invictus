@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -51,7 +51,9 @@
                     <!-- Nested Row within Card Body -->
                     <div class="row">
                         <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                            <a href="index.jsp">
                             <img src="img/logoInvictus.png" style="height: auto;width: 270px;float: unset;margin-left: 110px;margin-top: 115px;}">
+                            </a>
                         </div>
                         <div class="col-lg-6">
                             <div class="p-5">
@@ -61,12 +63,12 @@
                                 <form class="user" action="LoginServlet" method="post">
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user"
-                                               id="exampleInputEmail" aria-describedby="emailHelp"
+                                               id="Email" aria-describedby="emailHelp" name="Email"
                                                placeholder="Email">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
-                                               id="exampleInputPassword" placeholder="Password">
+                                               id="Password" name="Password" placeholder="Password">
                                     </div>
 
                                     <button type="submit" class="btn btn-our btn-user btn-block">
