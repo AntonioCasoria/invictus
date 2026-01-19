@@ -1,5 +1,7 @@
 package BusinessLogicLayer;
 
+import DataAccessLayer.bean.Consultare;
+import DataAccessLayer.bean.PersonalTrainer;
 import DataAccessLayer.bean.Utente;
 import DataAccessLayer.query.QuerySelect;
 import DataAccessLayer.sql.Connessione;
@@ -50,12 +52,32 @@ public class GetTuttiUtentiServlet extends HttpServlet {
             }
         }
 
+        //Prendere tutti gli utenti da consultare
+        PersonalTrainer personalTrainer = (PersonalTrainer) req.getSession().getAttribute("personalTrainer");
+        List<Consultare> listaConsultare = new ArrayList<>();
+
+        try {
+            listaConsultare = querySelect.selectConsultareAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        List<Utente> listaDaRestituire = new ArrayList<>();
+        for(Utente u : listaEffettivaUtenti){
+            for(Consultare consultare : listaConsultare){
+                if(consultare.getIdUtente() == u.getIdUtente() && consultare.getIdPT() == personalTrainer.getIdPT()){
+                    listaDaRestituire.add(u);
+                }
+            }
+        }
+
         try {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                     .create();
 
-            String json = gson.toJson(listaEffettivaUtenti);
+            String json = gson.toJson(listaDaRestituire);
             resp.getWriter().write(json);
         } catch (Exception e) {
             e.printStackTrace(); // Questo scriverà l'errore nella console di IntelliJ

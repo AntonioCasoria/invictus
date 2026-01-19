@@ -424,6 +424,16 @@
             const container = $('#containerUtenti');
             container.empty();
 
+            // Se la lista è vuota dopo il filtro, mostriamo un messaggio
+            if (lista.length === 0) {
+                container.append(`
+            <div class="p-4 text-center text-muted">
+                Non ci sono utenti che hanno richiesto il servizio.
+            </div>
+        `);
+                return;
+            }
+
             lista.forEach(u => {
                 container.append(`
             <div class="list-item" onclick="selezionaUtente(this, '` + u.idUtente + `')">

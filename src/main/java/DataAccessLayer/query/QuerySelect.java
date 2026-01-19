@@ -345,4 +345,22 @@ public class QuerySelect {
 
         return schede;
     }
+
+    public List<Consultare> selectConsultareAll() throws SQLException {
+        String query = "SELECT * FROM Consultare";
+        ResultSet rs = select.select(query);
+        List<Consultare> consultare = new ArrayList<>();
+
+        while (rs.next()){
+            Consultare consultare1 = new Consultare();
+            consultare1.setIdRichiesta(rs.getInt(1));
+            consultare1.setIdUtente(rs.getInt(2));
+            consultare1.setIdPT(rs.getInt(3));
+            consultare1.setRichiesta(rs.getString(4));
+            consultare1.setStato(rs.getString(5));
+            consultare.add(consultare1);
+        }
+
+        return consultare;
+    }
 }
