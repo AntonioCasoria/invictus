@@ -5,13 +5,15 @@ import java.util.Objects;
 public class Comporre {
     private int idEsercizio;
     private int idScheda;
+    private int giorno;
 
     public Comporre() {
     }
 
-    public Comporre(int idEsercizio, int idScheda) {
+    public Comporre(int idEsercizio, int idScheda, int giorno) {
         this.idEsercizio = idEsercizio;
         this.idScheda = idScheda;
+        this.giorno = giorno;
     }
 
     public int getIdEsercizio() {
@@ -30,10 +32,18 @@ public class Comporre {
         this.idScheda = idScheda;
     }
 
+    public int getGiorno() {
+        return giorno;
+    }
+
+    public void setGiorno(int giorno) {
+        this.giorno = giorno;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Comporre comporre)) return false;
-        return idEsercizio == comporre.idEsercizio && idScheda == comporre.idScheda;
+        return idEsercizio == comporre.idEsercizio && idScheda == comporre.idScheda && giorno == comporre.giorno;
     }
 
     @Override
@@ -41,6 +51,7 @@ public class Comporre {
         return "Comporre{" +
                 "idEsercizio=" + idEsercizio +
                 ", idScheda=" + idScheda +
+                ", giorno=" + giorno +
                 '}';
     }
 }

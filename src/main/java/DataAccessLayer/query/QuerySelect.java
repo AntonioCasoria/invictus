@@ -53,7 +53,7 @@ public class QuerySelect {
         ArrayList<Comporre> c = new ArrayList<>();
 
         while (rs.next()){
-            Comporre c1 = new Comporre(rs.getInt(1),rs.getInt(2));
+            Comporre c1 = new Comporre(rs.getInt(1),rs.getInt(2), rs.getInt(3));
             c.add(c1);
         }
 
@@ -186,11 +186,10 @@ public class QuerySelect {
 
         if(rs.next()){
             sa.setIdScheda(rs.getInt(1));
-            sa.setIdUtente(rs.getInt(2));
-            sa.setIdPT(rs.getInt(3));
-            sa.setDataCreazione(rs.getString(4));
-            sa.setDurata(rs.getString(5));
-            sa.setObiettivo(rs.getString(6));
+            sa.setIdPT(rs.getInt(2));
+            sa.setDataCreazione(LocalDate.parse(rs.getString(3)));
+            sa.setDurata(rs.getString(4));
+            sa.setObiettivo(rs.getString(5));
         }
 
         return sa;
@@ -254,6 +253,25 @@ public class QuerySelect {
         return utenti;
     }
 
+    public ArrayList<PersonalTrainer> selectPersonalTrainerAll() throws SQLException {
+        String query = "SELECT * FROM PersonalTrainer";
+        ResultSet rs = select.select(query);
+        ArrayList<PersonalTrainer> pt = new ArrayList<>();
+
+        while (rs.next()){
+            PersonalTrainer p = new PersonalTrainer();
+            p.setIdPT(rs.getInt(1));
+            p.setNome(rs.getString(2));
+            p.setCognome(rs.getString(3));
+            p.setEmail(rs.getString(4));
+            p.setPassword(rs.getString(5));
+            p.setDataNascita(rs.getString(6));
+
+            pt.add(p);
+        }
+        return pt;
+    }
+
     public List<String> getOrariByUtenteEData(int id, LocalDate data) throws SQLException {
         String query = "SELECT DISTINCT FasciaOraria FROM Prenotazione WHERE IdUtente = " + id + " AND DataPrenotazione = '" + data + "'";
         ResultSet rs = select.select(query);
@@ -274,5 +292,57 @@ public class QuerySelect {
             orari.add(rs.getString(1));
         }
         return orari;
+    }
+
+    public List<Esercizio> getEsercizioAll() throws SQLException {
+        String query = "SELECT * FROM Esercizio";
+        ResultSet rs = select.select(query);
+        List<Esercizio> esercizi = new ArrayList<>();
+
+        while (rs.next()){
+            Esercizio e = new Esercizio();
+            e.setIdEsercizio(rs.getInt(1));
+            e.setNome(rs.getString(2));
+            e.setDescrizione(rs.getString(3));
+            e.setGruppoMuscolare(rs.getString(4));
+            e.setSerie(rs.getInt(5));
+            e.setRipetizione(rs.getInt(6));
+            e.setTempoRecupero(rs.getInt(7));
+            e.setContenutoMultimediale(rs.getString(8));
+            e.setContenutoMultimediale2(rs.getString(9));
+            esercizi.add(e);
+        }
+        return esercizi;
+    }
+
+    public List<SchedaAllenamento> getSchedaAllenamentoAll() throws SQLException {
+        String query = "SELECT * FROM SchedaAllenamento";
+        ResultSet rs = select.select(query);
+        List<SchedaAllenamento> schede = new ArrayList<>();
+
+        while (rs.next()){
+            SchedaAllenamento schedaAllenamento = new SchedaAllenamento();
+            schedaAllenamento.setIdScheda(rs.getInt(1));
+            schedaAllenamento.setIdPT(rs.getInt(2));
+            schedaAllenamento.setDataCreazione(LocalDate.parse(rs.getString(3)));
+            schedaAllenamento.setDurata(rs.getString(4));
+            schedaAllenamento.setObiettivo(rs.getString(5));
+            schedaAllenamento.setNome(rs.getString(6));
+            schede.add(schedaAllenamento);
+        }
+
+        return schede;
+    }
+
+    public List<Integer> selectSchedeAssegnateUtente(int id) throws SQLException {
+        String query = "SELECT IdScheda FROM Assegnare WHERE IdUtente = " + id;
+        ResultSet rs = select.select(query);
+        List<Integer> schede = new ArrayList<>();
+
+        while (rs.next()){
+            schede.add(rs.getInt(1));
+        }
+
+        return schede;
     }
 }

@@ -88,12 +88,11 @@
         /* Stile per slot già prenotati da ME */
         .cell.my-booking {
             background-color: #d1ecf1 !important; /* Blu chiaro */
-            color: #0c5460 !important;
+            color: #00b8a9 !important;
             text-decoration: line-through;
             cursor: not-allowed;
             pointer-events: none;
             opacity: 0.7;
-            border: 1px dashed #0c5460;
         }
 
         /* Stile per slot che hanno raggiunto la capienza massima (15 persone) */

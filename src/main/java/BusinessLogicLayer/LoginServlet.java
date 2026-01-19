@@ -1,5 +1,6 @@
 package BusinessLogicLayer;
 
+import DataAccessLayer.bean.PersonalTrainer;
 import DataAccessLayer.bean.Utente;
 import DataAccessLayer.query.QueryInsert;
 import DataAccessLayer.query.QuerySelect;
@@ -33,7 +34,6 @@ public class LoginServlet extends HttpServlet {
         Connessione c = new Connessione();
         Connection conn = c.connessione();
         QuerySelect querySelect = new QuerySelect(conn);
-        QueryInsert queryInsert = new QueryInsert(conn);
 
         //Recuperiamo i parametri dalla form
         String email = req.getParameter("Email");
@@ -42,6 +42,13 @@ public class LoginServlet extends HttpServlet {
         ArrayList<Utente> utenti = new ArrayList<>();
         try {
             utenti = querySelect.selectUtentiAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        ArrayList<PersonalTrainer> pt = new ArrayList<>();
+        try {
+            pt = querySelect.selectPersonalTrainerAll();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -62,12 +69,18 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("admin", utente);
                 address = "./homePageAdmin.jsp";
                 break;
-            }else{
-                //admin non presente nel db
-                address = "./login.jsp";
             }
         }
-            //inserire PT
+
+        for(PersonalTrainer personalTrainer : pt){
+            if(personalTrainer.getEmail().equals(email) && personalTrainer.getPassword().equals(password)){
+                HttpSession session = req.getSession(true);
+                session.setAttribute("personalTrainer", personalTrainer);
+                //session.setAttribute("prenotazioni", new ArrayList<>());
+                address = "./homePagePT.jsp";
+                break;
+            }
+        }
 
         RequestDispatcher dispatcher = req.getRequestDispatcher(address);
         dispatcher.forward(req, resp);

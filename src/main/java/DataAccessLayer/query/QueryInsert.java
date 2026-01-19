@@ -21,21 +21,21 @@ public class QueryInsert {
 
     public void insertArchivioSchedeAllenamento(ArchivioSchedeAllenamento asa){
         InsertMYSQL insert = new InsertMYSQL(conn);
-        String query = "insert into ArchivioSchedaAllenamento(IdUtente,IdScheda,IdPT) values " +
+        String query = "insert into ArchvioSchedeAllenamento(IdUtente,IdScheda,IdPT) values " +
                 "(" + asa.getIdUtente() + "," + asa.getIdScheda() + "," + asa.getIdPT() + ")";
         insert.insert(query);
     }
 
     public void insertComporre(Comporre c) {
         InsertMYSQL insert = new InsertMYSQL(conn);
-        String query = "insert into Comporre(IdEsercizio,IdScheda) values" +
-                "(" + c.getIdEsercizio() + "," + c.getIdScheda() + ")";
+        String query = "insert into Comporre(IdEsercizio,IdScheda,Giorno) values" +
+                "(" + c.getIdEsercizio() + "," + c.getIdScheda() + ","+c.getGiorno()+ ")";
         insert.insert(query);
     }
 
     public void insertEsercizio(Esercizio e){
         InsertMYSQL insert = new InsertMYSQL(conn);
-        String query = "insert into Esercizio(Nome,Descrizione,GruppoMuscolare,Serie,Ripetizione,TempoRecupero,ContenutoMultimediale,ContenutoMultimediale2) values" +
+        String query = "insert into Esercizio(Nome,Descrizione,GruppoMuscolare,Serie,Ripetizioni,TempoRecupero,ContenutoMultimediale,ContenutoMultimediale2) values" +
                 "('" + e.getNome() + "','" + e.getDescrizione() + "','" + e.getGruppoMuscolare() + "', " + e.getSerie() + ", " + e.getRipetizione() + ", " + e.getTempoRecupero() + " ,'" + e.getContenutoMultimediale() + "','" + e.getContenutoMultimediale2() + "')";
         insert.insert(query);
     }
@@ -77,8 +77,8 @@ public class QueryInsert {
 
     public void insertSchedaAllenamento(SchedaAllenamento sa){
         InsertMYSQL insert = new InsertMYSQL(conn);
-        String query = "insert into SchedaAllenamento(IdUtente,IdPT,DataCreazione,Durata,Obiettivo) values" +
-                "(" + sa.getIdUtente() + ", " + sa.getIdPT() + ", '" + sa.getDataCreazione() + "', " + sa.getDurata() + ", '" + sa.getObiettivo() + "')";
+        String query = "insert into SchedaAllenamento(IdPT,DataCreazione,Durata,Obiettivo,Nome) values" +
+                "(" + sa.getIdPT() + ", '" + sa.getDataCreazione() + "', " + sa.getDurata() + ", '" + sa.getObiettivo() + "', '" + sa.getNome() + "')";
         insert.insert(query);
     }
 
@@ -89,4 +89,9 @@ public class QueryInsert {
         insert.insert(query);
     }
 
+    public void insertAssegnare(Assegnare assegnare){
+        InsertMYSQL insert = new InsertMYSQL(conn);
+        String query = "insert into Assegnare(IdUtente,IdScheda) values (" + assegnare.getIdUtente() + "," + assegnare.getIdScheda() + ")";
+        insert.insert(query);
+    }
 }
