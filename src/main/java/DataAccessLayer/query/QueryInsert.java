@@ -37,12 +37,13 @@ public class QueryInsert {
         InsertMYSQL insert = new InsertMYSQL(conn);
         String query = "insert into Esercizio(Nome,Descrizione,GruppoMuscolare,Serie,Ripetizioni,TempoRecupero,ContenutoMultimediale,ContenutoMultimediale2) values" +
                 "('" + e.getNome() + "','" + e.getDescrizione() + "','" + e.getGruppoMuscolare() + "', " + e.getSerie() + ", " + e.getRipetizione() + ", " + e.getTempoRecupero() + " ,'" + e.getContenutoMultimediale() + "','" + e.getContenutoMultimediale2() + "')";
+        System.out.println(query);
         insert.insert(query);
     }
 
     public void insertGenerare(Generare g){
         InsertMYSQL insert = new InsertMYSQL(conn);
-        String query = "insert into Generare(IdEsercizio,IdPerfomance) values" +
+        String query = "insert into Generare(IdEsercizio,idPerformance) values" +
                 "(" + g.getIdEsercizio() + "," + g.getIdPerfomance() + ")";
         insert.insert(query);
     }
@@ -93,5 +94,12 @@ public class QueryInsert {
         InsertMYSQL insert = new InsertMYSQL(conn);
         String query = "insert into Assegnare(IdUtente,IdScheda) values (" + assegnare.getIdUtente() + "," + assegnare.getIdScheda() + ")";
         insert.insert(query);
+    }
+
+    public void insertConsultare(Consultare consultare){
+        InsertMYSQL insert = new InsertMYSQL(conn);
+        String query = "insert into Consultare(IdUtente,IdPT,Richiesta,Stato) values (" + consultare.getIdUtente() + "," + consultare.getIdPT() + ", '" + consultare.getRichiesta() + "', '" + consultare.getStato() + "') ";
+        insert.insert(query);
+
     }
 }

@@ -304,7 +304,9 @@
 
 
             <div class="container-fluid text-center">
-                <h1 class="h3 mb-4 text-gray-800">Prenota il tuo posto in palestra</h1>
+                <div class="mb-4">
+                    <h1 class="h4 text-gray-900 font-weight-bold">Prenota il tuo posto in palestra</h1>
+                </div>
 
                 <div class="card shadow mb-4">
                     <div class="card-body">

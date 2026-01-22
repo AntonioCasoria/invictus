@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(name = "GetSchedaEserciziUtenteServlet", value = "/GetSchedaEserciziUtenteServlet")
-public class GetSchedaEserciziUtenteServlet extends HttpServlet {
+@WebServlet(name = "VisualizzaSchedaUtenteServlet", value = "/VisualizzaSchedaUtenteServlet")
+public class VisualizzaSchedaUtenteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
@@ -30,7 +30,6 @@ public class GetSchedaEserciziUtenteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Gestisce la chiamata $.post dal tuo script
         String idSchedaStr = req.getParameter("idScheda");
-        System.out.println(idSchedaStr);
 
         Map<String, Object> jsonResponse = new HashMap<>();
         List<Map<String, Object>> listaEsercizi = new ArrayList<>();
@@ -40,9 +39,11 @@ public class GetSchedaEserciziUtenteServlet extends HttpServlet {
             try (Connection conn = c.connessione()) {
                 // Query: Uniamo la tabella 'comporre' con 'esercizio' filtrando per IdScheda
                 String sql = "SELECT c.Giorno, e.IdEsercizio, e.Nome, e.GruppoMuscolare, " +
-                        "e.ContenutoMultimediale, e.Serie, e.Ripetizioni " +
+                        "e.ContenutoMultimediale, e.contenutoMultimediale2, e.Serie, e.Ripetizioni, e.TempoRecupero, e.Descrizione," +
+                        "s.Nome, s.Obiettivo, s.DataCreazione, s.Durata " +
                         "FROM comporre c " +
                         "JOIN esercizio e ON c.IdEsercizio = e.IdEsercizio " +
+                        "INNER JOIN schedaallenamento s ON c.IdScheda = s.IdScheda " +
                         "WHERE c.IdScheda = ? " +
                         "ORDER BY c.Giorno ASC";
 
@@ -54,11 +55,18 @@ public class GetSchedaEserciziUtenteServlet extends HttpServlet {
                             Map<String, Object> ex = new HashMap<>();
                             ex.put("giorno", rs.getInt("Giorno"));
                             ex.put("idEsercizio", rs.getInt("IdEsercizio"));
-                            ex.put("nome", rs.getString("Nome"));
+                            ex.put("nomeEsercizio", rs.getString("e.Nome"));
                             ex.put("gruppo", rs.getString("GruppoMuscolare"));
                             ex.put("immagine", rs.getString("ContenutoMultimediale"));
+                            ex.put("video", rs.getString("contenutoMultimediale2"));
                             ex.put("serie", rs.getInt("Serie"));
                             ex.put("ripetizioni", rs.getString("Ripetizioni"));
+                            ex.put("tempoRecupero", rs.getInt("TempoRecupero"));
+                            ex.put("descrizione", rs.getString("Descrizione"));
+                            ex.put("nomeScheda", rs.getString("s.Nome"));
+                            ex.put("obiettivo", rs.getString("Obiettivo"));
+                            ex.put("dataCreazione", rs.getDate("DataCreazione"));
+                            ex.put("durata", rs.getInt("Durata"));
                             listaEsercizi.add(ex);
                         }
                     }

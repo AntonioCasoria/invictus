@@ -66,7 +66,7 @@ public class QueryDelete {
     public Generare deleteGenerare(int idEsercizio, int idPerfomance) throws SQLException {
         QuerySelect qs = new QuerySelect(conn);
         ArrayList<Generare> g = qs.selectGenerareById(idEsercizio);
-        Generare g1 = new Generare();
+        Generare g1 = new Generare(idEsercizio, idPerfomance);
 
         for (Generare generare : g) {
             if(generare.getIdEsercizio() == idEsercizio && generare.getIdPerfomance() == idPerfomance){

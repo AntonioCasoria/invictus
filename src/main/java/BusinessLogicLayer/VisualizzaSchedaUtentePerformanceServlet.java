@@ -1,5 +1,6 @@
 package BusinessLogicLayer;
 
+import DataAccessLayer.bean.Utente;
 import DataAccessLayer.sql.Connessione;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,8 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(name = "GetSchedaEserciziUtenteServlet", value = "/GetSchedaEserciziUtenteServlet")
-public class GetSchedaEserciziUtenteServlet extends HttpServlet {
+@WebServlet(name = "VisualizzaSchedaUtentePerformanceServlet", value = "/VisualizzaSchedaUtentePerformanceServlet")
+public class VisualizzaSchedaUtentePerformanceServlet extends HttpServlet{
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
@@ -30,7 +32,8 @@ public class GetSchedaEserciziUtenteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Gestisce la chiamata $.post dal tuo script
         String idSchedaStr = req.getParameter("idScheda");
-        System.out.println(idSchedaStr);
+
+        Utente utente = (Utente) req.getSession().getAttribute("utente");
 
         Map<String, Object> jsonResponse = new HashMap<>();
         List<Map<String, Object>> listaEsercizi = new ArrayList<>();
@@ -39,26 +42,43 @@ public class GetSchedaEserciziUtenteServlet extends HttpServlet {
             Connessione c = new Connessione();
             try (Connection conn = c.connessione()) {
                 // Query: Uniamo la tabella 'comporre' con 'esercizio' filtrando per IdScheda
-                String sql = "SELECT c.Giorno, e.IdEsercizio, e.Nome, e.GruppoMuscolare, " +
-                        "e.ContenutoMultimediale, e.Serie, e.Ripetizioni " +
-                        "FROM comporre c " +
-                        "JOIN esercizio e ON c.IdEsercizio = e.IdEsercizio " +
-                        "WHERE c.IdScheda = ? " +
+                String sql = "SELECT DISTINCT c.Giorno, e.IdEsercizio, e.Nome, e.GruppoMuscolare, e.Serie AS SerieTeoriche, e.Ripetizioni AS RipTeoriche, s.Nome, p.* " +
+                        "FROM comporre c JOIN esercizio e ON c.IdEsercizio = e.IdEsercizio " +
+                        "INNER JOIN schedaallenamento s ON c.IdScheda = s.IdScheda " +
+                        "INNER JOIN assegnare ac ON s.IdScheda = ac.IdScheda " +
+                        "INNER JOIN generare g ON e.IdEsercizio = g.IdEsercizio " +
+                        "INNER JOIN performance p ON g.idPerformance = p.idPerformance " +
+                        "WHERE c.IdScheda = ? AND ac.IdUtente = ? " +
+                        "AND p.idPerformance = (SELECT MAX(p2.idPerformance) FROM performance p2 " +
+                        "JOIN generare g2 ON p2.idPerformance = g2.idPerformance " +
+                        "WHERE p2.IdUtente = ? AND g2.IdEsercizio = e.IdEsercizio) " +
                         "ORDER BY c.Giorno ASC";
 
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setInt(1, Integer.parseInt(idSchedaStr));
+                    ps.setInt(2, utente.getIdUtente());
+                    ps.setInt(3, utente.getIdUtente());
 
                     try (ResultSet rs = ps.executeQuery()) {
                         while (rs.next()) {
                             Map<String, Object> ex = new HashMap<>();
                             ex.put("giorno", rs.getInt("Giorno"));
                             ex.put("idEsercizio", rs.getInt("IdEsercizio"));
-                            ex.put("nome", rs.getString("Nome"));
+                            ex.put("nomeEsercizio", rs.getString("e.Nome"));
                             ex.put("gruppo", rs.getString("GruppoMuscolare"));
-                            ex.put("immagine", rs.getString("ContenutoMultimediale"));
-                            ex.put("serie", rs.getInt("Serie"));
-                            ex.put("ripetizioni", rs.getString("Ripetizioni"));
+                            ex.put("serie", rs.getInt("SerieTeoriche"));
+                            ex.put("ripetizioni", rs.getString("RipTeoriche"));
+                            ex.put("nomeScheda", rs.getString("s.Nome"));
+                            ex.put("idPerformance", rs.getInt("IdPerformance"));
+                            ex.put("idUtente", rs.getInt("IdUtente"));
+                            ex.put("data", rs.getDate("Data"));
+                            ex.put("feedback", rs.getString("Feedback"));
+                            ex.put("carico", rs.getFloat("Carico"));
+                            ex.put("rpe", rs.getInt("RPE"));
+                            ex.put("serieEffettive", rs.getInt("SerieEffettive"));
+                            ex.put("ripetizioniEffettive", rs.getInt("RipetizioniEffettive"));
+                            ex.put("tempoRecuperoEffettivo", rs.getInt("TempoRecuperoEffettive"));
+                            ex.put("rpeEffivo", rs.getInt("RPEEffettivo"));
                             listaEsercizi.add(ex);
                         }
                     }

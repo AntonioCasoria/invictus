@@ -1,7 +1,5 @@
 package DataAccessLayer.bean;
 
-import java.util.Objects;
-
 public class Generare {
     private int idEsercizio;
     private int idPerfomance;

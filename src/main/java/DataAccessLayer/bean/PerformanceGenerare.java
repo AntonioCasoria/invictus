@@ -3,7 +3,7 @@ package DataAccessLayer.bean;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Performance {
+public class PerformanceGenerare {
     private int idPerformance;
     private int idUtente;
     private LocalDate data;
@@ -14,11 +14,13 @@ public class Performance {
     private int ripetizioniEffettive;
     private int tempoRecuperoEffettivo;
     private int RPEeffettivo;
+    private int idEsercizio;
 
-    public Performance() {
+    public PerformanceGenerare() {
     }
 
-    public Performance(int idUtente, LocalDate data, String feedback, float carico, int RPE, int serieEffettive, int ripetizioniEffettive, int tempoRecuperoEffettivo, int RPEeffettivo) {
+    public PerformanceGenerare(int idPerformance, int idUtente, LocalDate data, String feedback, float carico, int RPE, int serieEffettive, int ripetizioniEffettive, int tempoRecuperoEffettivo, int RPEeffettivo, int idEsercizio) {
+        this.idPerformance = idPerformance;
         this.idUtente = idUtente;
         this.data = data;
         this.feedback = feedback;
@@ -28,6 +30,7 @@ public class Performance {
         this.ripetizioniEffettive = ripetizioniEffettive;
         this.tempoRecuperoEffettivo = tempoRecuperoEffettivo;
         this.RPEeffettivo = RPEeffettivo;
+        this.idEsercizio = idEsercizio;
     }
 
     public int getIdPerformance() {
@@ -110,18 +113,26 @@ public class Performance {
         this.RPEeffettivo = RPEeffettivo;
     }
 
+    public int getIdEsercizio() {
+        return idEsercizio;
+    }
+
+    public void setIdEsercizio(int idEsercizio) {
+        this.idEsercizio = idEsercizio;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Performance that)) return false;
-        return idPerformance == that.idPerformance && idUtente == that.idUtente && Float.compare(carico, that.carico) == 0 && RPE == that.RPE && serieEffettive == that.serieEffettive && ripetizioniEffettive == that.ripetizioniEffettive && tempoRecuperoEffettivo == that.tempoRecuperoEffettivo && RPEeffettivo == that.RPEeffettivo && Objects.equals(data, that.data) && Objects.equals(feedback, that.feedback);
+        if (!(o instanceof PerformanceGenerare that)) return false;
+        return idPerformance == that.idPerformance && idUtente == that.idUtente && Float.compare(carico, that.carico) == 0 && RPE == that.RPE && serieEffettive == that.serieEffettive && ripetizioniEffettive == that.ripetizioniEffettive && tempoRecuperoEffettivo == that.tempoRecuperoEffettivo && RPEeffettivo == that.RPEeffettivo && idEsercizio == that.idEsercizio && Objects.equals(data, that.data) && Objects.equals(feedback, that.feedback);
     }
 
     @Override
     public String toString() {
-        return "Performance{" +
+        return "PerformanceGenerare{" +
                 "idPerformance=" + idPerformance +
                 ", idUtente=" + idUtente +
-                ", data='" + data + '\'' +
+                ", data=" + data +
                 ", feedback='" + feedback + '\'' +
                 ", carico=" + carico +
                 ", RPE=" + RPE +
@@ -129,6 +140,7 @@ public class Performance {
                 ", ripetizioniEffettive=" + ripetizioniEffettive +
                 ", tempoRecuperoEffettivo=" + tempoRecuperoEffettivo +
                 ", RPEeffettivo=" + RPEeffettivo +
+                ", idEsercizio=" + idEsercizio +
                 '}';
     }
 }

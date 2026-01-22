@@ -101,7 +101,7 @@ public class QuerySelect {
         if(rs.next()){
             p.setIdPerformance(rs.getInt(1));
             p.setIdUtente(rs.getInt(2));
-            p.setData(rs.getString(3));
+            p.setData(LocalDate.parse(rs.getString(3)));
             p.setFeedback(rs.getString(4));
             p.setCarico(rs.getInt(5));
             p.setRPE(rs.getInt(6));
@@ -358,6 +358,126 @@ public class QuerySelect {
             consultare1.setIdPT(rs.getInt(3));
             consultare1.setRichiesta(rs.getString(4));
             consultare1.setStato(rs.getString(5));
+            consultare.add(consultare1);
+        }
+
+        return consultare;
+    }
+
+    public List<SchedaAllenamento> getSchedeByUtente(int id) throws SQLException {
+        String query = "SELECT a.IdScheda, a.IdPT, a.DataCreazione, a.Durata, a.Obiettivo, a.Nome FROM SchedaAllenamento as a INNER JOIN Assegnare on Assegnare.IdScheda = a.IdScheda WHERE assegnare.IdUtente = " + id;
+        ResultSet rs = select.select(query);
+        List<SchedaAllenamento> schede = new ArrayList<>();
+
+        while (rs.next()){
+            SchedaAllenamento schedaAllenamento = new SchedaAllenamento();
+            schedaAllenamento.setIdScheda(rs.getInt(1));
+            schedaAllenamento.setIdPT(rs.getInt(2));
+            schedaAllenamento.setDataCreazione(LocalDate.parse(rs.getString(3)));
+            schedaAllenamento.setDurata(rs.getString(4));
+            schedaAllenamento.setObiettivo(rs.getString(5));
+            schedaAllenamento.setNome(rs.getString(6));
+
+            schede.add(schedaAllenamento);
+        }
+
+        return schede;
+    }
+
+    public ArrayList<Performance> getPerformanceAll() throws SQLException {
+        String query = "SELECT * FROM Performance";
+        ResultSet rs = select.select(query);
+        ArrayList<Performance> performance = new ArrayList<>();
+
+        while(rs.next()){
+            Performance p = new Performance();
+            p.setIdPerformance(rs.getInt(1));
+            p.setIdUtente(rs.getInt(2));
+            p.setData(LocalDate.parse(rs.getString(3)));
+            p.setFeedback(rs.getString(4));
+            p.setCarico(rs.getInt(5));
+            p.setRPE(rs.getInt(6));
+            p.setSerieEffettive(rs.getInt(7));
+            p.setRipetizioniEffettive(rs.getInt(8));
+            p.setTempoRecuperoEffettivo(rs.getInt(9));
+            p.setRPEeffettivo(rs.getInt(10));
+
+            performance.add(p);
+        }
+
+        return performance;
+    }
+
+    public ArrayList<PerformanceGenerare> selectUltimePerformance(int idUtente) throws SQLException {
+        String query = "SELECT p.*, g.idEsercizio " +
+                "FROM performance p " +
+                "JOIN generare g ON p.IdPerformance = g.idPerformance " +
+                "WHERE p.IdUtente = " + idUtente + " " +
+                "AND p.IdPerformance IN (" +
+                "SELECT MAX(p2.IdPerformance) " +
+                "FROM performance p2 " +
+                "JOIN generare g2 ON p2.IdPerformance = g2.idPerformance " +
+                "WHERE p2.IdUtente = " + idUtente + " " +
+                "GROUP BY g2.idEsercizio" +
+                ")";
+        ResultSet rs = select.select(query);
+        ArrayList<PerformanceGenerare> performance = new ArrayList<>();
+
+        while (rs.next()){
+            PerformanceGenerare p = new PerformanceGenerare();
+            p.setIdPerformance(rs.getInt(1));
+            p.setIdUtente(rs.getInt(2));
+            p.setData(LocalDate.parse(rs.getString(3)));
+            p.setFeedback(rs.getString(4));
+            p.setCarico(rs.getFloat(5));
+            p.setRPE(rs.getInt(6));
+            p.setSerieEffettive(rs.getInt(7));
+            p.setRipetizioniEffettive(rs.getInt(8));
+            p.setTempoRecuperoEffettivo(rs.getInt(9));
+            p.setRPEeffettivo(rs.getInt(10));
+            p.setIdEsercizio(rs.getInt(11));
+            performance.add(p);
+        }
+
+        return performance;
+
+    }
+
+    public Performance selectUltimaPerformance(int idUtente) throws SQLException {
+        String query = "SELECT * FROM Performance WHERE IdUtente = " + idUtente + " ORDER BY IdPerformance DESC LIMIT 1";
+        ResultSet rs = select.select(query);
+        Performance p = new Performance();
+
+        if (rs.next()){
+            p.setIdPerformance(rs.getInt(1));
+            p.setIdUtente(rs.getInt(2));
+            p.setData(LocalDate.parse(rs.getString(3)));
+            p.setFeedback(rs.getString(4));
+            p.setCarico(rs.getInt(5));
+            p.setRPE(rs.getInt(6));
+            p.setSerieEffettive(rs.getInt(7));
+            p.setRipetizioniEffettive(rs.getInt(8));
+            p.setTempoRecuperoEffettivo(rs.getInt(9));
+            p.setRPEeffettivo(rs.getInt(10));
+        }
+        return p;
+    }
+
+    public ArrayList<ConsultareUtente> selectRichiestePT(int idpt) throws SQLException {
+        String query = "SELECT c.*, u.Nome, u.Cognome, u.Obiettivo FROM Consultare as c INNER JOIN Utente as u on c.IdUtente = u.IdUtente WHERE IdPT = " + idpt + " AND Stato = 'Consultato'";
+        ResultSet rs = select.select(query);
+        ArrayList<ConsultareUtente> consultare = new ArrayList<>();
+
+        while (rs.next()){
+            ConsultareUtente consultare1 = new ConsultareUtente();
+            consultare1.setIdRichiesta(rs.getInt(1));
+            consultare1.setIdUtente(rs.getInt(2));
+            consultare1.setIdPT(rs.getInt(3));
+            consultare1.setRichiesta(rs.getString(4));
+            consultare1.setStato(rs.getString(5));
+            consultare1.setNome(rs.getString(6));
+            consultare1.setCognome(rs.getString(7));
+            consultare1.setObiettivo(rs.getString(8));
             consultare.add(consultare1);
         }
 
