@@ -2,10 +2,26 @@
 <%@ page import="DataAccessLayer.bean.Prenotazione" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DataAccessLayer.bean.PersonalTrainer" %>
+<%@ page import="DataAccessLayer.bean.ConsultareUtente" %>
+<%@ page import="DataAccessLayer.sql.Connessione" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="DataAccessLayer.query.QuerySelect" %>
+<%@ page import="java.sql.SQLException" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
   PersonalTrainer pt = (PersonalTrainer) session.getAttribute("personalTrainer");
+
+  Connessione c = new Connessione();
+  Connection conn = c.connessione();
+  QuerySelect querySelect = new QuerySelect(conn);
+
+  ArrayList<ConsultareUtente> richieste = new ArrayList<>();
+  try {
+    richieste  = querySelect.selectRichiestePT(pt.getIdPT());
+  } catch (SQLException e) {
+    throw new RuntimeException(e);
+  }
 
   ArrayList<String> prenotazioni = (ArrayList<String>) session.getAttribute("prenotazioni");
 %>
@@ -279,7 +295,19 @@
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-envelope fa-fw" style="color: white"></i>
               <!-- Counter - Messages -->
+              <%
+                if(richieste.isEmpty()){
+
+              %>
               <span class="badge badge-danger badge-counter"></span>
+
+              <%
+              }else {
+              %>
+              <span class="badge badge-danger badge-counter"><%=richieste.size()%><i class="fa-solid fa-circle-plus"></i></span>
+              <%
+                }
+              %>
             </a>
             <!-- Dropdown - Messages -->
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -287,22 +315,27 @@
               <h6 class="dropdown-header">
                 Message Center
               </h6>
-              <!--<a class="dropdown-item d-flex align-items-center" href="#"></a>-->
-              <!--
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                      <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                           alt="...">
-                      <div class="status-indicator"></div>
+              <%
+                if(!(richieste.isEmpty())){
+                  for(ConsultareUtente s : richieste){
+              %>
+
+              <a class="dropdown-item d-flex align-items-center"
+                 href="AggiornaStatoRichiestaServlet?idUtente=<%=s.getIdUtente()%>&idRichiesta=<%=s.getIdRichiesta()%>">
+                <div class="mr-3">
+                  <div class="icon-circle bg-success">
+                    <i class="fa-solid fa-circle-check text-white"></i>
                   </div>
-                  <div>
-                      <div class="text-truncate">I have the photos that you ordered last month, how
-                          would you like them sent to you?
-                      </div>
-                      <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
+                </div>
+                <div>
+                  <%=s.getNome() + " " + s.getCognome() + " ha richiesto una tua consultazione su " + s.getObiettivo() + "."%>
+                </div>
               </a>
-              -->
+
+              <%
+                  }
+                }
+              %>
             </div>
           </li>
 
@@ -319,7 +352,7 @@
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="login.jsp">
+              <a class="dropdown-item" href="areaPersonalePT.jsp">
                 <i class="fa-solid fa-circle-user fa-sm fa-fw mr-2 text-our-blu"></i>
                 Area Personale
               </a>

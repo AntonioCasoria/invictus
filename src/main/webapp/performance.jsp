@@ -378,7 +378,7 @@
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="login.jsp">
+              <a class="dropdown-item" href="areaPersonaleUser.jsp">
                 <i class="fa-solid fa-circle-user fa-sm fa-fw mr-2 text-our-blu"></i>
                 Area Personale
               </a>
@@ -399,9 +399,10 @@
       <div id="content">
         <div class="container-fluid">
 
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800 font-weight-bold">Performance dell'allenamento</h1>
+          <div class="mb-4">
+            <h1 class="h4 text-gray-900 font-weight-bold text-center">Performance dell'allenamento</h1>
           </div>
+
 
           <div id="listaSchedeContainer" class="scheda-scrollbar mb-4">
           </div>

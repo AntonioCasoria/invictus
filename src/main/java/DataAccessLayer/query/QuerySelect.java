@@ -4,6 +4,7 @@ import DataAccessLayer.bean.*;
 import DataAccessLayer.sql.SelectMYSQL;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -482,5 +483,29 @@ public class QuerySelect {
         }
 
         return consultare;
+    }
+
+    public List<Prenotazione> selectPrenotazioniAttive(int idUtente) throws SQLException {
+        List<Prenotazione> lista = new ArrayList<>();
+        // Join con la tabella utente per recuperare il nome del Personal Trainer (idPt)
+        String sql = "SELECT p.IdPrenotazione, p.DataPrenotazione, p.FasciaOraria " +
+                "FROM prenotazione p " +
+                "JOIN utente u ON p.IdUtente = u.IdUtente " +
+                "WHERE p.IdUtente = ? AND p.DataPrenotazione >= CURRENT_DATE " +
+                "ORDER BY p.DataPrenotazione ASC, p.FasciaOraria ASC";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idUtente);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Prenotazione pr = new Prenotazione();
+                    pr.setIdPrenotazione(rs.getInt("IdPrenotazione"));
+                    pr.setDataPrenotazione(rs.getDate("DataPrenotazione").toLocalDate());
+                    pr.setFasciaOraria(rs.getString("FasciaOraria"));
+                    lista.add(pr);
+                }
+            }
+        }
+        return lista;
     }
 }

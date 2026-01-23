@@ -18,7 +18,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>HomePage Utente Registrato</title>
+  <title>Progressi</title>
 
   <!-- Custom fonts for this template-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -29,56 +29,117 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
   <style>
-    /* Card centrale che contiene le due opzioni */
-    .main-selection-card {
-      border: 2px solid #333; /* Bordo scuro come nella pagina prenotazione */
-      border-radius: 25px;
-      overflow: hidden;
-      background: white;
-      min-height: 284px;
+    /* --- Layout Generale Area Progressi --- */
+
+    /* Contenitore del grafico: fondamentale per Chart.js [cite: 2026-01-22] */
+    .chart-area {
+      position: relative;
+      height: 25rem; /* Altezza ottimale per la visualizzazione desktop */
+      width: 100%;
     }
 
-    /* Sezioni cliccabili (Consulta PT e Visualizza Scheda) */
-    .choice-section {
+    /* Stile delle Card (coerente con il mockup) */
+    .card {
+      border: none;
+      border-radius: 0.85rem;
+      background-color: #ffffff;
+      box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+    }
+
+    .card-header {
+      background-color: #f8f9fc;
+      border-bottom: 1px solid #e3e6f0;
+      padding: 1rem 1.25rem;
+      border-top-left-radius: 0.85rem !important;
+      border-top-right-radius: 0.85rem !important;
+    }
+
+    /* --- Lista Selezione Gruppi Muscolari (Destra) --- */
+
+    #listaGruppiMuscolari {
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    #listaGruppiMuscolari .list-group-item {
+      border: none;
+      margin-bottom: 8px;
+      border-radius: 0.5rem !important;
+      background-color: #f8f9fc;
+      color: #4e73df; /* Colore primario del progetto [cite: 2026-01-21] */
+      font-weight: 600;
+      transition: all 0.25s ease-in-out;
       cursor: pointer;
-      transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      justify-content: center;
-      background-color: #ffffff;
-      padding: 60px 20px;
+      justify-content: space-between;
     }
 
-    /* Effetto hover per dare feedback all\'utente */
-    .choice-section:hover {
-      background-color: #f0f4f8; /* Blu chiarissimo al passaggio del mouse */
+    /* Effetto Hover: leggero spostamento a destra [cite: 2026-01-20] */
+    #listaGruppiMuscolari .list-group-item:hover {
+      background-color: #eaecf4;
+      color: #2e59d9;
+      padding-left: 1.75rem;
     }
 
-    .choice-section:hover i {
-      transform: scale(1.1); /* L\'icona si ingrandisce leggermente */
-      color: #333;
+    /* Stato Attivo: evidenzia il gruppo selezionato */
+    #listaGruppiMuscolari .list-group-item.active {
+      background-color: #4e73df;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(78, 115, 223, 0.25);
+      z-index: 2;
     }
 
-    .choice-section i {
-      transition: transform 0.3s;
-      color: #1e73be; /* Blu Invictus */
+    /* --- Elementi Testuali --- */
+
+    .font-weight-bold {
+      font-weight: 700 !important;
     }
 
-    /* Gestione della linea di divisione verticale/orizzontale */
-    @media (min-width: 768px) {
-      .border-right-custom {
-        border-right: 1px solid #333 !important;
+    #titoloGrafico {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* --- Responsive Design --- */
+
+    /* Ottimizzazione per Tablet e Smartphone */
+    @media (max-width: 991px) {
+      .chart-area {
+        height: 18rem; /* Riduce l'altezza per schermi piccoli */
+      }
+
+      /* Trasforma la lista verticale in uno scrollbar orizzontale su mobile */
+      #listaGruppiMuscolari {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 10px;
+        border-radius: 0;
+      }
+
+      #listaGruppiMuscolari .list-group-item {
+        margin-right: 10px;
+        margin-bottom: 0;
+        padding: 0.5rem 1.25rem;
+      }
+
+      #listaGruppiMuscolari .list-group-item:hover {
+        padding-left: 1.25rem; /* Rimuove lo spostamento laterale su mobile */
       }
     }
 
-    @media (max-width: 767px) {
-      .border-right-custom {
-        border-bottom: 1px solid #333 !important;
-      }
+    /* Animazione Fade-In per il grafico */
+    .animated--fade-in {
+      animation: fadeIn 0.5s ease-in-out;
     }
 
-    .text-our-blu { color: #1e73be; }
-    .bg-our-blu { background-color: #1e73be; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body id="page-top">
@@ -292,42 +353,53 @@
       <!-- End of Topbar -->
 
       <!-- Begin Page Content -->
-      <div class="container-fluid text-center">
-        <div class="mb-4">
-          <h1 class="h4 text-gray-900 font-weight-bold">Seleziona la tua scelta</h1>
+      <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800 font-weight-bold">I tuoi progressi</h1>
         </div>
 
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="card shadow mb-4 main-selection-card">
-              <div class="card-body p-0">
-                <div class="row no-gutters">
+        <div class="row">
+          <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary" id="titoloGrafico">Carico nel tempo (kg)</h6>
+              </div>
+              <div class="card-body">
+                <div class="chart-area" style="position: relative; height:40vh; width:100%">
+                  <canvas id="myProgressChart"></canvas>
+                </div>
+                <hr>
+                <div class="small text-muted">
+                  Il grafico mostra la media del carico sollevato per il gruppo selezionato.
+                </div>
+              </div>
+            </div>
+          </div>
 
-                  <div class="col-md-6 choice-section border-right-custom"
-                       onclick="location.href='richiestaScheda.jsp'">
-                    <div class="text-center">
-                      <i class="fas fa-comments fa-4x mb-4"></i>
-                      <h2 class="h4 font-weight-bold text-gray-800">Consulta PT</h2>
-                      <p class="text-muted px-4">Richiedi una nuova scheda o un aggiornamento al tuo Trainer</p>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6 choice-section"
-                       onclick="location.href='visualizzaSchedaUtente.jsp'">
-                    <div class="text-center">
-                      <i class="fas fa-dumbbell fa-4x mb-4"></i>
-                      <h2 class="h4 font-weight-bold text-gray-800">Visualizza Scheda</h2>
-                      <p class="text-muted px-4">Consulta la tua scheda d'allenamento attuale e i tuoi esercizi</p>
-                    </div>
-                  </div>
-
+          <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Seleziona Gruppo</h6>
+              </div>
+              <div class="card-body">
+                <div class="list-group list-group-flush" id="listaGruppiMuscolari">
+                  <button type="button" class="list-group-item list-group-item-action active" onclick="caricaDatiProgresso('Petto', this)">Petto</button>
+                  <button type="button" class="list-group-item list-group-item-action" onclick="caricaDatiProgresso('Dorsali', this)">Schiena</button>
+                  <button type="button" class="list-group-item list-group-item-action" onclick="caricaDatiProgresso('Femorali', this)">Femorali</button>
+                  <button type="button" class="list-group-item list-group-item-action " onclick="caricaDatiProgresso('Quadricipiti', this)">Quadricipiti</button>
+                  <button type="button" class="list-group-item list-group-item-action " onclick="caricaDatiProgresso('Spalle', this)">Spalle</button>
+                  <button type="button" class="list-group-item list-group-item-action" onclick="caricaDatiProgresso('Bicipiti', this)">Bicipiti</button>
+                  <button type="button" class="list-group-item list-group-item-action" onclick="caricaDatiProgresso('Tricipiti', this)">Tricipiti</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <!-- End of Main Content -->
+
     </div>
     <!-- End of Content Wrapper -->
 
@@ -366,7 +438,7 @@
     </div>
   </div>
 
-</div>
+
   <!-- jQuery (OBBLIGATORIO) -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -380,44 +452,119 @@
   <script src="js/sidebar.js"></script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <script>
-    let slideIndex = 0;
-    let slides = document.getElementsByClassName("mySlides");
-    let slideInterval;
+    // Istanza globale del grafico per poterlo distruggere e ricreare [cite: 2026-01-22]
+    let myChart = null;
 
-    function showSlides(index) {
-      if (!slides.length) return;
+    $(document).ready(function() {
+      /**
+       * 1. GESTIONE CLICK BOTTONI (Selezione Gruppi Muscolari)
+       * Usiamo la delegazione degli eventi per gestire i bottoni nella sidebar destra [cite: 2026-01-21]
+       */
+      $('#listaGruppiMuscolari').on('click', '.list-group-item', function(e) {
+        e.preventDefault();
 
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
+        // Rimuove la classe 'active' da tutti i bottoni e la aggiunge a quello cliccato
+        $('#listaGruppiMuscolari .list-group-item').removeClass('active');
+        $(this).addClass('active');
+
+        // Recupera il nome del gruppo muscolare dal testo del bottone
+        const gruppoSelezionato = $(this).text().trim();
+
+        // Aggiorna il titolo visivo
+        $('#titoloGrafico').text('Andamento Carichi: ' + gruppoSelezionato);
+
+        // Avvia il caricamento dei dati per il gruppo selezionato [cite: 2026-01-21]
+        caricaDatiProgresso(gruppoSelezionato);
+      });
+
+      // 2. CARICAMENTO INIZIALE
+      // Simula il click sul primo bottone della lista al caricamento della pagina
+      const primoBottone = $('#listaGruppiMuscolari .list-group-item').first();
+      if (primoBottone.length > 0) {
+        primoBottone.click();
+      }
+    });
+
+    /**
+     * Recupera i dati storici tramite AJAX [cite: 2026-01-21]
+     */
+    function caricaDatiProgresso(gruppo) {
+      $.ajax({
+        url: 'GetStoricoProgressiServlet',
+        type: 'POST',
+        data: { gruppoMuscolare: gruppo },
+        dataType: 'json',
+        success: function(response) {
+          console.log("Dati recuperati per " + gruppo + ": ", response);
+
+          // Verifica che la response contenga i dati necessari [cite: 2026-01-22]
+          if (response.labels && response.dataset) {
+            disegnaGrafico(response.labels, response.dataset);
+          }
+        },
+        error: function(xhr) {
+          console.error("Errore nel recupero dati per " + gruppo + ": ", xhr.responseText);
+        }
+      });
+    }
+
+    /**
+     * Inizializza o aggiorna l'area del grafico [cite: 2026-01-22]
+     */
+    function disegnaGrafico(labels, dataPoints) {
+      const ctx = document.getElementById('myProgressChart').getContext('2d');
+
+      // Se esiste un grafico precedente, lo distruggiamo per evitare sovrapposizioni [cite: 2026-01-22]
+      if (myChart) {
+        myChart.destroy();
       }
 
-      if (index >= slides.length) slideIndex = 0;
-      else if (index < 0) slideIndex = slides.length - 1;
-      else slideIndex = index;
-
-      slides[slideIndex].style.display = "block";
-    }
-
-    function nextSlide() {
-      showSlides(slideIndex + 1);
-      resetInterval();
-    }
-
-    function prevSlide() {
-      showSlides(slideIndex - 1);
-      resetInterval();
-    }
-
-    function resetInterval() {
-      clearInterval(slideInterval);
-      slideInterval = setInterval(() => showSlides(slideIndex + 1), 5000);
-    }
-
-    window.onload = function () {
-      showSlides(slideIndex);
-      slideInterval = setInterval(() => showSlides(slideIndex + 1), 5000);
+      // Configurazione estetica del grafico a linee [cite: 2026-01-21, 2026-01-22]
+      myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Carico (kg)',
+            data: dataPoints,
+            fill: true,
+            backgroundColor: 'rgba(78, 115, 223, 0.1)',
+            borderColor: 'rgba(78, 115, 223, 1)',
+            pointRadius: 5,
+            pointBackgroundColor: 'rgba(78, 115, 223, 1)',
+            pointBorderColor: '#fff',
+            tension: 0.3
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                // Gestione decimali (3.5 kg) nel tooltip [cite: 2026-01-22]
+                label: function(context) {
+                  return 'Peso: ' + parseFloat(context.parsed.y).toFixed(1) + ' kg';
+                }
+              }
+            }
+          },
+          scales: {
+            x: { grid: { display: false } },
+            y: {
+              ticks: {
+                // Gestione decimali nell'asse Y [cite: 2026-01-22]
+                callback: function(value) { return value.toFixed(1) + ' kg'; }
+              }
+            }
+          }
+        }
+      });
     }
   </script>
+
 </body>
 </html>

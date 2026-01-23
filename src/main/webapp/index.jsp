@@ -68,7 +68,7 @@
         <li class="nav-item">
             <a class="nav-link" href="login.jsp">
                 <i class="fas fa-fw fa-chart-area" style="color: #1e73be;"></i>
-                <span style="color: #1e73be;">Performance</span></a>
+                <span style="color: #1e73be;">Progressi</span></a>
         </li>
 
         <!-- Divider -->
