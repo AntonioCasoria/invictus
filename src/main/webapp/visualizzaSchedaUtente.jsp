@@ -263,7 +263,7 @@
     <li class="nav-item">
       <a class="nav-link" href="progressi.jsp">
         <i class="fas fa-fw fa-chart-area" style="color: #1e73be;"></i>
-        <span style="color: #1e73be;">Performance</span></a>
+        <span style="color: #1e73be;">Progressi</span></a>
     </li>
 
     <!-- Divider -->
@@ -406,7 +406,7 @@
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="login.jsp">
+              <a class="dropdown-item" href="areaPersonaleUser.jsp">
                 <i class="fa-solid fa-circle-user fa-sm fa-fw mr-2 text-our-blu"></i>
                 Area Personale
               </a>

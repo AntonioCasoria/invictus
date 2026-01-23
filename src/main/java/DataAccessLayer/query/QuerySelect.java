@@ -116,7 +116,7 @@ public class QuerySelect {
     }
 
     public PersonalTrainer selectPersonalTrainerById(int id) throws SQLException {
-        String query = "SELECT * FROM PersonalTrainer WHERE IdPersonalTrainer = "  + id;
+        String query = "SELECT * FROM PersonalTrainer WHERE IdPT = "  + id;
         ResultSet rs = select.select(query);
         PersonalTrainer pt = new PersonalTrainer();
 

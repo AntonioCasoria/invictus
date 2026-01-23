@@ -369,8 +369,9 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800 font-weight-bold">Dashboard Personal Trainer</h1>
+
+                <div class="mb-4">
+                    <h1 class="h4 text-gray-900 font-weight-bold text-center">Dashboard Personal Trainer</h1>
                 </div>
 
                 <div class="card shadow mb-4">

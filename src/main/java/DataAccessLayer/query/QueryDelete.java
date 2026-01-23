@@ -96,7 +96,7 @@ public class QueryDelete {
         QuerySelect qs = new QuerySelect(conn);
         PersonalTrainer pt = qs.selectPersonalTrainerById(id);
 
-        String query = "DELETE FROM PersonalTrainer WHERE IdPersonalTrainer = " + id;
+        String query = "DELETE FROM PersonalTrainer WHERE IdPT = " + id;
         DeleteMYSQL delete = new DeleteMYSQL(conn);
         delete.delete(query);
         return pt;
@@ -108,6 +108,7 @@ public class QueryDelete {
 
         String query = "DELETE FROM Prenotazione WHERE IdPrenotazione = " + id;
         DeleteMYSQL delete = new DeleteMYSQL(conn);
+        delete.delete(query);
         return p;
     }
 
@@ -117,6 +118,7 @@ public class QueryDelete {
 
         String query = "DELETE FROM Progressi WHERE IdProgressi = " + id;
         DeleteMYSQL delete = new DeleteMYSQL(conn);
+        delete.delete(query);
         return p;
     }
 
@@ -126,6 +128,7 @@ public class QueryDelete {
 
         String query = "DELETE FROM SchedaAllenamento WHERE IdScheda = " + id;
         DeleteMYSQL delete = new DeleteMYSQL(conn);
+        delete.delete(query);
         return sa;
     }
 
@@ -135,6 +138,7 @@ public class QueryDelete {
 
         String query = "DELETE FROM Utente WHERE IdUtente = " + id;
         DeleteMYSQL delete = new DeleteMYSQL(conn);
+        delete.delete(query);
         return u;
     }
 
